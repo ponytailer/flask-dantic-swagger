@@ -18,7 +18,7 @@ and it can help you generate swagger quickly.
         address: Optional[str]
 
     @app.route("/")
-    @validate(query=Book, body=Author)
+    @validate(query=Book, body=Author, response=Author)
     def test_route():
         book_title = request.query_params.title
         author = request.body_params
