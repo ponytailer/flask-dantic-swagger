@@ -5,6 +5,17 @@ and it can help you generate swagger quickly.
 
 ------------------
 ``` test/app.py
+
+    class Book(ValidatorModel):
+        title: str
+        price: int
+
+    class Author(ValidatorModel):
+        name: str
+        age: int = 30
+        books: List[Book]
+        address: Optional[str]
+
     @app.route("/")
     @validate(query=Book, body=Author)
     def test_route():
