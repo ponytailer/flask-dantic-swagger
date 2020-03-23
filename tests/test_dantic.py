@@ -1,11 +1,15 @@
 from typing import List, Optional
 from enum import Enum
 
-from flask import jsonify, request
+from flask import jsonify, request, Flask
 from pydantic import ValidationError
 from flask_dantic_swagger import (
     validate, ValidatorModel
 )
+
+
+app = Flask(__name__)
+client = app.test_client()
 
 
 class TestEnum(Enum):
@@ -47,7 +51,7 @@ def test_dantic_model():
     assert author_v.books[0].title == book["title"]
 
 
-def test_body_validate(app, client):
+def test_body_validate():
 
     @app.route("/test", methods=["POST"])
     @validate(body=Author)
@@ -60,7 +64,7 @@ def test_body_validate(app, client):
     assert resp.status_code == 200
 
 
-def test_query_validate(app, client):
+def test_query_validate():
 
     @app.route("/book")
     @validate(query=Book)
@@ -73,7 +77,7 @@ def test_query_validate(app, client):
     assert resp.json["title"] == "123"
 
 
-def test_in_query_validate(app, client):
+def test_in_query_validate():
 
     @app.route("/names/<path:title>/books", methods=["PUT"])
     @validate(body=Book, validate_path=True)
@@ -86,25 +90,25 @@ def test_in_query_validate(app, client):
     assert resp.json["title"] == "1234"
 
 
-def test_enum_validate(app, client):
+def test_enum_validate():
 
     @app.route("/testenum", methods=["POST"])
     @validate(body=EnumTest)
-    def test():
+    def test4():
         return jsonify()
 
     resp = client.post("/testenum", json={"enum": "not_test"})
     assert "validation_error" in resp.json
 
 
-def test_raise_for_error(app, client):
+def test_raise_for_error():
     @app.errorhandler(ValidationError)
     def error_handler(e):
         return jsonify(errors=e.errors()), 200
 
     @app.route("/test/raise_for_error", methods=["GET"])
     @validate(query=Book, raise_for_error=True)
-    def test():
+    def test5():
         return jsonify(success=True)
 
     resp = client.get("/test/raise_for_error?price=str")
