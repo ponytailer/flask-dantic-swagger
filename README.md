@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/huangxiaohen2738/flask-dantic-swagger.svg?branch=master)](https://travis-ci.org/huangxiaohen2738/flask-dantic-swagger)
 ### flask-dantic-swagger
 
 Use the pydantic to validate your request or response in flask,
