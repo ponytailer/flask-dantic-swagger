@@ -1,11 +1,15 @@
 language: python
 python:
  - "3.6"
+ - "3.7"
+ - "3.8"
+
 install:
  - pip install -U -i https://pypi.doubanio.com/simple pip setuptools wheel
  - pip install -U -i https://pypi.doubanio.com/simple pipenv
  - pip install coverage
  - pipenv install --deploy
-script: nosetests --with-coverage --cover-package=flask_dantic_swagger
+ 
+script: script: py.test
 after_success:
   - coveralls
