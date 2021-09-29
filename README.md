@@ -4,6 +4,8 @@
 
 ### flask-dantic-swagger
 
+Please use the [schema-validator](https://github.com/huangxiaohen2738/schema-validator)
+
 Use the pydantic to validate your request or response in flask,
 and it can help you generate swagger quickly.
 
